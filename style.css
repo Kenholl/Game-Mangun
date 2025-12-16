@@ -1,0 +1,442 @@
+/* ===============================
+      POLICE BENGUIAT
+=============================== */
+@font-face {
+  font-family: "Benguiat Bold";
+  src: url("./docs/assets/fonts/Benguiat Bold.ttf");
+}
+
+/* ===============================
+      RESET GLOBAL + POLICE
+=============================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Benguiat Bold", sans-serif !important;
+  color: red !important;
+}
+
+/* Empêche les écrans de s’afficher tous ensemble */
+.hidden {
+  display: none !important;
+}
+
+/* ===============================
+      FOND TV ÉCRAN PLEIN (ANIMÉ)
+=============================== */
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url('./docs/assets/images/tv_nobg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  animation: tvAnimation 1.2s steps(1) infinite;
+}
+
+/* 🔥 Animation frame par frame */
+@keyframes tvAnimation {
+  0%   { background-image: url('./docs/assets/images/tv_nobg1.jpg'); }
+  5%   { background-image: url('./docs/assets/images/tv_nobg1.jpg'); }
+  10%  { background-image: url('./docs/assets/images/tv_nobg2.jpg'); }
+  15%  { background-image: url('./docs/assets/images/tv_nobg3.jpg'); }
+  20%  { background-image: url('./docs/assets/images/tv_nobg4.jpg'); }
+  25%  { background-image: url('./docs/assets/images/tv_nobg5.jpg'); }
+  30%  { background-image: url('./docs/assets/images/tv_nobg6.jpg'); }
+  35%  { background-image: url('./docs/assets/images/tv_nobg7.jpg'); }
+  40%  { background-image: url('./docs/assets/images/tv_nobg8.jpg'); }
+  45%  { background-image: url('./docs/assets/images/tv_nobg9.jpg'); }
+  55%  { background-image: url('./docs/assets/images/tv_nobg8.jpg'); }
+  60%  { background-image: url('./docs/assets/images/tv_nobg7.jpg'); }
+  65%  { background-image: url('./docs/assets/images/tv_nobg6.jpg'); }
+  70%  { background-image: url('./docs/assets/images/tv_nobg5.jpg'); }
+  75%  { background-image: url('./docs/assets/images/tv_nobg4.jpg'); }
+  80%  { background-image: url('./docs/assets/images/tv_nobg3.jpg'); }
+  85%  { background-image: url('./docs/assets/images/tv_nobg2.jpg'); }
+  90%  { background-image: url('./docs/assets/images/tv_nobg1.jpg'); }
+  100% { background-image: url('./docs/assets/images/tv_nobg1.jpg'); }
+}
+
+/* ===============================
+   ZONE BLANCHE DE LA TV
+=============================== */
+:root {
+  --screen-left: 22vw;
+  --screen-right: 78vw;
+  --screen-top: 06vh;
+  --screen-bottom: 77vh;
+
+  --screen-width: calc(var(--screen-right) - var(--screen-left));
+  --screen-height: calc(var(--screen-bottom) - var(--screen-top));
+}
+
+/* ===============================
+      CANVAS DU JEU
+=============================== */
+#canvas {
+  position: absolute;
+  left: var(--screen-left);
+  top: var(--screen-top);
+  width: var(--screen-width);
+  height: var(--screen-height);
+  border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+  z-index: 30 !important;
+}
+
+/* TV interne */
+#bk-tv {
+  position: absolute;
+  left: var(--screen-left);
+  top: var(--screen-top);
+  width: var(--screen-width);
+  height: var(--screen-height);
+  z-index: 10 !important;
+  pointer-events: none;
+}
+
+/* BACKGROUNDS DU JEU */
+.first-background {
+  background-image: url("./docs/assets/images/pixelart.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.second-background {
+  background-image: url("./docs/assets/images/Background_2.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* ===============================
+       ÉCRAN DE TITRE
+=============================== */
+#title-screen {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 50;
+}
+
+#game-title {
+  position: absolute;
+  width: calc(var(--screen-width) * 0.32);
+  top: calc(var(--screen-top) + var(--screen-height) * 0.06);
+  left: calc(var(--screen-left) + var(--screen-width) * 0.5);
+  transform: translateX(-50%);
+}
+
+#jump {
+  position: absolute;
+  font-size: calc(var(--screen-width) * 0.03);
+  top: calc(var(--screen-top) + var(--screen-height) * 0.39);
+  left: calc(var(--screen-left) + var(--screen-width) * 0.5);
+  transform: translateX(-50%);
+}
+
+#title-button {
+  position: absolute;
+  font-size: calc(var(--screen-width) * 0.027);
+  padding: calc(var(--screen-width)*0.009) calc(var(--screen-width)*0.028);
+  border: calc(var(--screen-width)*0.0035) solid red;
+  border-radius: 50px;
+  top: calc(var(--screen-top) + var(--screen-height) * 0.58);
+  left: calc(var(--screen-left) + var(--screen-width) * 0.5);
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+
+.demon_Left,
+.demon_Right {
+  position: absolute;
+  width: calc(var(--screen-width) * 0.085);
+  top: calc(var(--screen-top) + var(--screen-height) * 0.55);
+}
+
+.demon_Left {
+  left: calc(var(--screen-left) + var(--screen-width) * 0.21);
+}
+.demon_Right {
+  left: calc(var(--screen-left) + var(--screen-width) * 0.70);
+}
+
+#zToJump_Start {
+  position: absolute;
+  font-size: calc(var(--screen-width) * 0.018);
+  top: calc(var(--screen-top) + var(--screen-height) * 0.84);
+  left: calc(var(--screen-left) + var(--screen-width) * 0.5);
+  transform: translateX(-50%);
+}
+
+/* ===============================
+        ÉCRAN DES MONDES
+=============================== */
+#levels {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 50;
+}
+
+.level_P {
+  position: absolute;
+  top: calc(var(--screen-top) + var(--screen-height) * 0.14);
+  left: calc(var(--screen-left) + var(--screen-width) * 0.50);
+  transform: translateX(-50%);
+  font-size: calc(var(--screen-width) * 0.04);
+}
+
+.demon_Left_Level,
+.demon_Right_Level {
+  position: absolute;
+  width: calc(var(--screen-width) * 0.10);
+}
+
+.demon_Left_Level {
+  top: calc(var(--screen-top) + var(--screen-height) * 0.37);
+  left: calc(var(--screen-left) + var(--screen-width) * 0.32);
+}
+
+.demon_Right_Level {
+  top: calc(var(--screen-top) + var(--screen-height) * 0.57);
+  left: calc(var(--screen-left) + var(--screen-width) * 0.64);
+  transform: rotate(180deg);
+}
+
+#btn-normal,
+#btn-upsideDown {
+  position: absolute;
+  font-size: calc(var(--screen-width)*0.025);
+  padding: calc(var(--screen-width)*0.008) calc(var(--screen-width)*0.026);
+  border: calc(var(--screen-width)*0.0035) solid red;
+  border-radius: 50px;
+  top: calc(var(--screen-top) + var(--screen-height)*0.50);
+  cursor: pointer;
+}
+
+#btn-normal {
+  left: calc(var(--screen-left) + var(--screen-width)*0.25);
+}
+
+#btn-upsideDown {
+  left: calc(var(--screen-left) + var(--screen-width)*0.62);
+  transform: rotate(180deg);
+}
+
+#zToJump_Level {
+  position: absolute;
+  font-size: calc(var(--screen-width)*0.018);
+  top: calc(var(--screen-top) + var(--screen-height)*0.84);
+  left: calc(var(--screen-left) + var(--screen-width)*0.50);
+  transform: translateX(-50%);
+}
+
+/* ===============================
+      SÉLECTION DE PERSONNAGE
+=============================== */
+#pickPlayer {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 50;
+}
+
+.dustin_Left_Level {
+  position: absolute;
+  width: calc(var(--screen-width) * 0.10);
+  top: calc(var(--screen-top) + var(--screen-height) * 0.38);
+  left: calc(var(--screen-left) + var(--screen-width) * 0.25);
+}
+
+.hopper_Right_Level {
+  position: absolute;
+  width: calc(var(--screen-width) * 0.08);
+  top: calc(var(--screen-top) + var(--screen-height) * 0.341);
+  left: calc(var(--screen-left) + var(--screen-width) * 0.673);
+}
+
+#btn-dustin,
+#btn-hopper {
+  position: absolute;
+  font-size: calc(var(--screen-width)*0.025);
+  border: calc(var(--screen-width)*0.0035) solid red;
+  border-radius: 50px;
+  padding: calc(var(--screen-width)*0.008) calc(var(--screen-width)*0.026);
+  top: calc(var(--screen-top) + var(--screen-height) * 0.60);
+  cursor: pointer;
+}
+
+#btn-dustin {
+  left: calc(var(--screen-left) + var(--screen-width)*0.22);
+}
+
+#btn-hopper {
+  left: calc(var(--screen-left) + var(--screen-width)*0.66);
+}
+
+/* ===============================
+         GAME OVER
+=============================== */
+#game-over-screen {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 50;
+}
+
+#game-over {
+  position: absolute;
+  font-size: calc(var(--screen-width)*0.065);
+  top: calc(var(--screen-top) + var(--screen-height)*0.12);
+  left: calc(var(--screen-left) + var(--screen-width)*0.50);
+  transform: translateX(-50%);
+}
+
+.try-again-button {
+  position: absolute;
+  font-size: calc(var(--screen-width)*0.028);
+  top: calc(var(--screen-top) + var(--screen-height)*0.40);
+  left: calc(var(--screen-left) + var(--screen-width)*0.50);
+  transform: translateX(-50%);
+}
+
+/* Score + niveau de la partie */
+#currentScore {
+  position: absolute;
+  top: calc(var(--screen-top) + var(--screen-height) * 0.30);
+  left: calc(var(--screen-left) + var(--screen-width) * 0.50);
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: calc(var(--screen-width) * 0.025);
+}
+
+#restart-button {
+  position: absolute;
+  width: calc(var(--screen-width)*0.06);
+  top: calc(var(--screen-top) + var(--screen-height)*0.48);
+  left: calc(var(--screen-left) + var(--screen-width)*0.50);
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+
+/* ===============================
+   ✅ HIGH SCORES (FIX SANS SUPPRIMER)
+   - On remplace le bottom calc (qui peut sortir de l'écran)
+   - Par un top stable dans la zone TV
+=============================== */
+#highScores {
+  position: absolute;
+
+  /* ✅ placement fiable dans la zone "TV" */
+  top: calc(var(--screen-top) + var(--screen-height) * 0.62);
+
+  left: calc(var(--screen-left) + var(--screen-width)*0.50);
+  transform: translateX(-50%);
+  font-size: calc(var(--screen-width)*0.02);
+  text-align: center;
+  line-height: 1.4; /* ✅ lisible */
+}
+
+/* ===============================
+   ANIMATION D'APPARITION D'ÉCRAN
+=============================== */
+.screen-appear {
+  animation: screenAppear 0.45s ease-out;
+}
+
+@keyframes screenAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+    filter: brightness(0.7);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  30% { transform: translateX(-2px); }
+  40% { transform: translateX(2px); }
+  50% { transform: translateX(0); }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    filter: brightness(1);
+  }
+}
+
+/* ===============================
+   ✅ FIX CLICS (NE CASSE RIEN)
+   But: un écran caché ne doit JAMAIS bloquer les clics
+=============================== */
+#title-screen,
+#levels,
+#pickPlayer,
+#game-over-screen {
+  pointer-events: none;
+}
+
+#title-screen:not(.hidden),
+#levels:not(.hidden),
+#pickPlayer:not(.hidden),
+#game-over-screen:not(.hidden) {
+  pointer-events: auto;
+}
+
+/* ✅ On force le bouton titre à être cliquable même si un parent bug */
+#title-button {
+  pointer-events: auto;
+  z-index: 9999;
+}
+
+/* ===============================
+   ÉCRAN NOM JOUEUR
+=============================== */
+#name-screen {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 50;
+}
+
+#playerNameInput {
+  position: absolute;
+  top: calc(var(--screen-top) + var(--screen-height) * 0.45);
+  left: calc(var(--screen-left) + var(--screen-width) * 0.50);
+  transform: translateX(-50%);
+  font-size: calc(var(--screen-width) * 0.025);
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 3px solid red;
+  background: black;
+  color: red;
+  text-align: center;
+  outline: none;
+}
+
+#name-validate-button {
+  position: absolute;
+  top: calc(var(--screen-top) + var(--screen-height) * 0.60);
+  left: calc(var(--screen-left) + var(--screen-width) * 0.50);
+  transform: translateX(-50%);
+  font-size: calc(var(--screen-width) * 0.027);
+  padding: 10px 30px;
+  border: 3px solid red;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+
+
+
+

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css?v=2">
+
+    <link href="./docs/assets/fonts/Benguiat Bold.ttf" rel="stylesheet">
+    <title>Stranger Mangun</title>
+
+    <link rel="icon" href="./docs/assets/favicon_package_v0/favicon-32x32.png">
+    <link rel="manifest" href="manifest.json" />
+
+    <style>
+        body { background-color: black; }
+    </style>
+
+    <link rel="preload" as="image" href="./docs/assets/images/tv_nobg.jpg">
+    <link rel="preload" as="image" href="./docs/assets/images/tv_nobg1.jpg">
+    <link rel="preload" as="image" href="./docs/assets/images/tv_nobg2.jpg">
+    <link rel="preload" as="image" href="./docs/assets/images/tv_nobg3.jpg">
+    <link rel="preload" as="image" href="./docs/assets/images/tv_nobg4.jpg">
+    <link rel="preload" as="image" href="./docs/assets/images/tv_nobg5.jpg">
+    <link rel="preload" as="image" href="./docs/assets/images/tv_nobg6.jpg">
+    <link rel="preload" as="image" href="./docs/assets/images/tv_nobg7.jpg">
+    <link rel="preload" as="image" href="./docs/assets/images/tv_nobg8.jpg">
+    <link rel="preload" as="image" href="./docs/assets/images/tv_nobg9.jpg">
+</head>
+
+<body>
+
+    <!-- ÉCRAN TITRE -->
+    <div id="title-screen">
+        <img src="./docs/assets/images/smalldemon-removebg-preview.png" class="demon_Left" alt="demon">
+        <img src="./docs/assets/images/smalldemon-removebg-preview.png" class="demon_Right" alt="demon">
+
+        <img src="./docs/assets/images/stranger-things-logo.png" id="game-title">
+        <h3 id="jump">Saute!</h3>
+        <h6 id="title-button">Appuie pour commencer</h6>
+        <h2 id="zToJump_Start">Appuie sur espace ou touche l’écran pour sauter</h2>
+    </div>
+
+<!-- ÉCRAN NOM JOUEUR -->
+<div id="name-screen" class="hidden">
+    <p class="level_P">Entre ton nom</p>
+
+    <input 
+        type="text" 
+        id="playerNameInput" 
+        placeholder="Ton pseudo Insta"
+        maxlength="20"
+    >
+
+    <h6 id="name-validate-button">Continuer</h6>
+</div>
+
+
+    <!-- CHOIX DES MONDES -->
+    <div id="levels" class="fade-out hidden">
+        <img src="./docs/assets/images/smalldemon-removebg-preview.png" class="demon_Left_Level" alt="demon">
+        <img src="./docs/assets/images/smalldemon-removebg-preview.png" class="demon_Right_Level" alt="demon">
+
+        <p class="level_P">Choisis ton monde</p>
+
+        <h6 id="btn-normal">Mangun City</h6>
+        <h6 id="btn-upsideDown">Upside Down</h6>
+
+        <h2 id="zToJump_Level">Appuie sur espace ou touche l’écran pour sauter</h2>
+    </div>
+
+    <!-- CHOIX DU PERSONNAGE -->
+    <div id="pickPlayer" class="fade-out hidden">
+        <img src="./docs/assets/images/player_frames_img/img_player_5.png" class="hopper_Right_Level" alt="hopper">
+        <img src="./docs/assets/images/dustin/dust3.png" class="dustin_Left_Level" alt="dustin">
+
+        <p class="level_P">Choisis ton personnage</p>
+        <h6 id="btn-dustin">Mister P</h6>
+        <h6 id="btn-hopper">Koko</h6>
+
+        <h2 id="zToJump_Level">Appuie sur espace ou touche l’écran pour sauter</h2>
+    </div>
+
+    <!-- ÉCRAN GAME OVER -->
+    <div id="game-over-screen" class="hidden">
+        <h1 id="game-over">Game Over</h1>
+        <h6 class="try-again-button">Recommencer ?</h6>
+
+        <img src="./docs/assets/images/restart_fixed-removebg-preview.png" id="restart-button" alt="restart button">
+
+        <!-- Score + niveau de la partie -->
+        <div id="currentScore">
+            <p id="finalScore"></p>
+            <p id="finalLevel"></p>
+        </div>
+
+
+        <!-- High scores -->
+        <div id="highScores">
+            <p>Meilleurs scores :</p>
+            <p id="highScore1"></p>
+            <p id="highScore2"></p>
+            <p id="highScore3"></p>
+        </div>
+    </div>
+
+    <!-- CANVAS DU JEU -->
+    <canvas id="canvas" width="730" height="552" class="hidden"></canvas>
+
+    <!-- TV ANIMÉE -->
+    <div id="bk-tv" class="hidden"></div>
+
+    <!-- SCRIPTS DU JEU -->
+    <script src="scripts/dustinTop.js"></script>
+    <script src="scripts/dustin.js"></script>
+    <script src="scripts/personagemTopo.js"></script>
+    <script src="scripts/personagem.js"></script>
+    <script src="scripts/demongorgonTop.js"></script>
+    <script src="scripts/demogorgon.js"></script>
+    <script src="scripts/dogsTop.js"></script>
+    <script src="scripts/dogs.js"></script>
+    <script src="scripts/batsTop.js"></script>
+    <script src="scripts/bats.js"></script>
+    <script src="scripts/slimeTop.js"></script>
+    <script src="scripts/slime.js"></script>
+    <script src="scripts/demonTopo.js"></script>
+    <script src="scripts/demons.js"></script>
+    <script src="scripts/game.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js');
+        }
+    </script>
+
+    <!-- SCRIPTS BASE DE DONNÉE -->
+    <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp,
+    query,
+    orderBy,
+    limit,
+    getDocs
+  } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+  // 🔑 CONFIG FIREBASE 
+  const firebaseConfig = {
+    apiKey: "AIzaSyBhpESORQ2r-VTYonQ94XKnpL_wjDVnYFY",
+    authDomain: "jeu-mangun-3fac3.firebaseapp.com",
+    projectId: "jeu-mangun-3fac3",
+    storageBucket: "jeu-mangun-3fac3.firebasestorage.app",
+    messagingSenderId: "663532056872",
+    appId: "1:663532056872:web:ca3416000970fae314201d"
+  };
+
+  // 🔥 Initialisation Firebase
+  const app = initializeApp(firebaseConfig);
+
+  // 🔥 Initialisation Firestore
+  const db = getFirestore(app);
+
+  // 📝 Sauvegarder un score (JEU CONCOURS)
+window.saveScore = async function(data) {
+  try {
+    await addDoc(collection(db, "scores"), {
+      player: data.player,
+      score: data.score,
+      sessionId: data.sessionId,
+      world: data.world,
+      character: data.character,
+      userAgent: navigator.userAgent,
+      createdAt: serverTimestamp()
+    });
+
+    console.log("✅ Score Firestore enregistré", data);
+  } catch (error) {
+    console.error("❌ Erreur Firestore :", error);
+  }
+};
+
+// 🏆 Récupérer le TOP 3 
+window.getLeaderboard = async function() {
+  try {
+    const q = query(
+      collection(db, "scores"),
+      orderBy("score", "desc"),
+      limit(3)
+    );
+
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => doc.data());
+
+  } catch (error) {
+    console.error("❌ Erreur leaderboard :", error);
+    return [];
+  }
+};
+</script>
+
+
+</body>
+</html>
+
