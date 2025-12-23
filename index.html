@@ -1,4 +1,34 @@
 <!DOCTYPE html>
+<!--
+   mmmmmmm    mmmmmmm     aaaaaaaaaaaaa   nnnn  nnnnnnnn       ggggggggg   ggggguuuuuu    uuuuuu  nnnn  nnnnnnnn
+ mm:::::::m  m:::::::mm   a::::::::::::a  n:::nn::::::::nn    g:::::::::ggg::::gu::::u    u::::u  n:::nn::::::::nn
+m::::::::::mm::::::::::m  aaaaaaaaa:::::a n::::::::::::::nn  g:::::::::::::::::gu::::u    u::::u  n::::::::::::::nn
+m::::::::::::::::::::::m           a::::a nn:::::::::::::::ng::::::ggggg::::::ggu::::u    u::::u  nn:::::::::::::::n
+m:::::mmm::::::mmm:::::m    aaaaaaa:::::a   n:::::nnnn:::::ng:::::g     g:::::g u::::u    u::::u    n:::::nnnn:::::n
+m::::m   m::::m   m::::m  aa::::::::::::a   n::::n    n::::ng:::::g     g:::::g u::::u    u::::u    n::::n    n::::n
+m::::m   m::::m   m::::m a::::aaaa::::::a   n::::n    n::::ng:::::g     g:::::g u::::u    u::::u    n::::n    n::::n
+m::::m   m::::m   m::::ma::::a    a:::::a   n::::n    n::::ng::::::g    g:::::g u:::::uuuu:::::u    n::::n    n::::n
+m::::m   m::::m   m::::ma::::a    a:::::a   n::::n    n::::ng:::::::ggggg:::::g u:::::::::::::::uu  n::::n    n::::n
+m::::m   m::::m   m::::ma:::::aaaa::::::a   n::::n    n::::n g::::::::::::::::g  u:::::::::::::::u  n::::n    n::::n
+m::::m   m::::m   m::::m a::::::::::aa:::a  n::::n    n::::n  gg::::::::::::::g   uu::::::::uu:::u  n::::n    n::::n
+mmmmmm   mmmmmm   mmmmmm  aaaaaaaaaa  aaaa  nnnnnn    nnnnnn    gggggggg::::::g     uuuuuuuu  uuuu  nnnnnn    nnnnnn
+                                                                        g:::::g
+                                                            gggggg      g:::::g
+                                                            g:::::gg   gg:::::g
+                                                             g::::::ggg:::::::g
+                                                              gg:::::::::::::g
+                                                                ggg::::::ggg
+                                                                   gggggg
+   _     _     ♥
+  (c).-.(c)  ♥
+   / ._. \   ♥
+ __\( Y )/__        Si tu triches on va te voir !!!
+(_.-/'-'\-._)       
+   ||   ||          
+ _.' `-' '._  
+(.-./`-'\.-.)
+ `-'     `-'                                                             
+-->
 <html lang="en">
 
 <head>
@@ -137,16 +167,17 @@
     <!-- SCRIPTS BASE DE DONNÉE -->
     <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    serverTimestamp,
-    query,
-    orderBy,
-    limit,
-    getDocs
-  } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp,
+  query,
+  orderBy,
+  limit,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
   // 🔑 CONFIG FIREBASE 
   const firebaseConfig = {
@@ -155,11 +186,25 @@
     projectId: "jeu-mangun-3fac3",
     storageBucket: "jeu-mangun-3fac3.firebasestorage.app",
     messagingSenderId: "663532056872",
-    appId: "1:663532056872:web:ca3416000970fae314201d"
+    appId: "1:663532056872:web:ca3416000970fae314201d",
+    measurementId: "G-CRCSS1MH1E"
   };
 
   // 🔥 Initialisation Firebase
   const app = initializeApp(firebaseConfig);
+
+const analytics = getAnalytics(app);
+
+// Fonction globale pour le jeu (PROD)
+window.trackEvent = function(name, params = {}) {
+  try {
+    logEvent(analytics, name, params);
+  } catch (e) {
+    console.warn("Analytics error", e);
+  }
+};
+
+
 
   // 🔥 Initialisation Firestore
   const db = getFirestore(app);
